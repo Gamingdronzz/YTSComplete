@@ -49,6 +49,7 @@ public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerV
                 .load(model.getImageURL())
                 .into(holder.imageCover);
         holder.movieTitle.setText(model.getMovieName());
+        holder.movieReleaseYear.setText(model.getYear());
     }
 
 
@@ -61,11 +62,15 @@ public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerV
 
         private ImageView imageCover;
         private TextView movieTitle;
+        private TextView movieReleaseYear;
+
+
 
         private MyViewHolder(View itemView) {
             super(itemView);
             imageCover = (ImageView) itemView.findViewById(R.id.image_cover_small);
             movieTitle = (TextView) itemView.findViewById(R.id.movie_name);
+            movieReleaseYear = itemView.findViewById(R.id.movie_year);
         }
 
     }

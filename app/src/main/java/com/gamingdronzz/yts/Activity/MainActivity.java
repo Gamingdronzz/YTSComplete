@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private TabLayout setUpTablayout(TabLayout tabLayout) {
         // Create Tabs Here
         tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
 
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -69,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //tabLayout.getTabAt(0).setIcon(R.drawable.group);
 
         //Add Title here
-        tabLayout.getTabAt(0).setText("Latest");
+        tabLayout.getTabAt(0).setText("LATEST");
+        tabLayout.getTabAt(1).setText("MOST\nDOWNLOADED");
+        //tabLayout.getTabAt(2).setText("RECENTLY\nVISITED");
 
 
         return tabLayout;

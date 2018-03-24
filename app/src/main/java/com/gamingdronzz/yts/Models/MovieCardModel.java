@@ -8,6 +8,15 @@ public class MovieCardModel {
 
     String imageURL;
     String movieName;
+    String year;
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 
     public String getImageURL() {
         return imageURL;
@@ -25,9 +34,7 @@ public class MovieCardModel {
         this.movieName = movieName;
     }
 
-    public MovieCardModel(String imageURL, String movieName) {
+    public MovieCardModel() {
 
-        this.imageURL = imageURL;
-        this.movieName = movieName;
     }
 }

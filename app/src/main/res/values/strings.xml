@@ -3,4 +3,14 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    
+    
+    <string name="title">title</string>
+    <string name="year">year</string>
+    <string name="rating">rating</string>
+    <string name="peers">peers</string>
+    <string name="seeds">seeds</string>
+    <string name="downloads">download_count</string>
+    <string name="likes">like_count</string>
+    <string name="date_added">date_added</string>
 </resources>

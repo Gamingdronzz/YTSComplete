@@ -1,16 +1,10 @@
 package com.gamingdronzz.yts.Tabs;
 
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +28,7 @@ import java.util.List;
 
 
 //Our class extending fragment
-public class Tab1 extends Fragment implements VolleyHelper.VolleyResponse {
+public class Tab3 extends Fragment implements VolleyHelper.VolleyResponse {
     VolleyHelper volleyHelper;
     RecyclerView recyclerView;
     private List<MovieCardModel> modelList;
@@ -54,7 +48,7 @@ public class Tab1 extends Fragment implements VolleyHelper.VolleyResponse {
     private void init(View view) {
         volleyHelper = new VolleyHelper(this, view.getContext());
 
-        volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByGenre("all", 30), "Upcoming");
+        volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByGenreAndSort("all", 30, Helper.SortParam.DOWNLOADS), "RecentlyVisited");
     }
 
     private void bindviews(View view) {

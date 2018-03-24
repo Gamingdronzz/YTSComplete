@@ -2,8 +2,14 @@ package com.gamingdronzz.yts.Tools;
 
 import android.util.Log;
 
+import com.gamingdronzz.yts.App.AppController;
+import com.gamingdronzz.yts.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Struct;
+import java.util.HashMap;
 
 /**
  * Created by balpreet on 3/22/2018.
@@ -19,10 +25,30 @@ public class Helper {
     public final String STATUS_MESSAGE = "status_message";
     public final String MOVIES = "movies";
 
-    private Helper() {
+    public enum SortParam {
+        TITLE(R.string.title),
+        YEAR(R.string.year),
+        RATING(R.string.rating),
+        PEERS(R.string.peers),
+        SEEDS(R.string.seeds),
+        DOWNLOADS(R.string.downloads),
+        LIKES(R.string.likes),
+        DATE_ADDED(R.string.date_added);
+
+        private int param;
+        SortParam(int param) {
+            this.param = param;
+        }
     }
 
-    ;
+
+
+    public String getString(int id)
+    {
+        return AppController.getInstance().getApplicationContext().getString(id);
+    }
+    private Helper() {
+    }
 
     public static Helper getInstance() {
         if (_instance == null) {
@@ -60,6 +86,18 @@ public class Helper {
                 .append("list_movies.json")
                 .append("?genre="+genre)
                 .append("&limit="+limit);
+        Log.d(TAG,"Query = " + stringBuilder.toString());
+        return stringBuilder.toString();
+    }
+
+    public String buildQueryByGenreAndSort(String genre,int limit,SortParam sortParam)
+    {
+        StringBuilder stringBuilder = new StringBuilder()
+                .append(getAPIURL())
+                .append("list_movies.json")
+                .append("?genre="+genre)
+                .append("&limit="+limit)
+                .append("&sort_by="+getString(sortParam.param));
         Log.d(TAG,"Query = " + stringBuilder.toString());
         return stringBuilder.toString();
     }
