@@ -7,15 +7,15 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.gamingdronzz.yts.Classes.DummyURLProcessor;
+import com.gamingdronzz.yts.Classes.URLProcessor;
+import com.gamingdronzz.yts.Interfaces.IURLProcessor;
+import com.gamingdronzz.yts.Listeners.OnURLAvailabilityCheckedListener;
 import com.gamingdronzz.yts.R;
-import com.gamingdronzz.yts.Tools.VolleyHelper;
 
-public class Splash extends AppCompatActivity{
+
+public class Splash extends AppCompatActivity {
     ImageView imageView;
 
     @Override
@@ -25,8 +25,6 @@ public class Splash extends AppCompatActivity{
         imageView = findViewById(R.id.logo);
 
         StartAnimations();
-        Log.d("Splash","making request");
-//
 
     }
 
@@ -49,7 +47,24 @@ public class Splash extends AppCompatActivity{
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                LoadNextActivity();
+
+                //TODO
+                //Change dummy url processor to url processor
+                IURLProcessor iurlProcessor = new DummyURLProcessor(new OnURLAvailabilityCheckedListener() {
+                    @Override
+                    public void OnUrlAvailable() {
+                        Log.d("Splash","URl Exists");
+                        LoadNextActivity();
+                    }
+
+                    @Override
+                    public void OnUrlNotAvailable() {
+                        Log.d("Splash","URl Does not Exists");
+                    }
+                });
+
+                iurlProcessor.CheckURLAvailability();
+                //LoadNextActivity();
             }
 
             @Override
@@ -65,4 +80,5 @@ public class Splash extends AppCompatActivity{
         startActivity(intent);
         finish();
     }
+
 }
