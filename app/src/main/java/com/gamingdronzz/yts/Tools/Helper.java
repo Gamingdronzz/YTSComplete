@@ -3,6 +3,7 @@ package com.gamingdronzz.yts.Tools;
 import android.util.Log;
 
 import com.gamingdronzz.yts.App.AppController;
+import com.gamingdronzz.yts.Models.MovieData;
 import com.gamingdronzz.yts.R;
 
 import org.json.JSONException;
@@ -36,17 +37,17 @@ public class Helper {
         DATE_ADDED(R.string.date_added);
 
         private int param;
+
         SortParam(int param) {
             this.param = param;
         }
     }
 
 
-
-    public String getString(int id)
-    {
+    public String getString(int id) {
         return AppController.getInstance().getApplicationContext().getString(id);
     }
+
     private Helper() {
     }
 
@@ -61,13 +62,12 @@ public class Helper {
         return "https://yts.am";
     }
 
-    public String getAPIURL()
-    {
+    public String getAPIURL() {
         return "https://yts.am/api/v2/";
     }
 
     public JSONObject getJson(String input) {
-        String json = input.substring(input.indexOf("{"), input.indexOf("}") );
+        String json = input.substring(input.indexOf("{"), input.indexOf("}"));
         JSONObject result = null;
         try {
             result = new JSONObject(json);
@@ -79,26 +79,28 @@ public class Helper {
         return result;
     }
 
-    public String buildQueryByGenre(String genre,int limit)
-    {
+    public String buildQueryByGenre(String genre, int limit) {
         StringBuilder stringBuilder = new StringBuilder()
                 .append(getAPIURL())
                 .append("list_movies.json")
-                .append("?genre="+genre)
-                .append("&limit="+limit);
-        Log.d(TAG,"Query = " + stringBuilder.toString());
+                .append("?genre=" + genre)
+                .append("&limit=" + limit);
+        Log.d(TAG, "Query = " + stringBuilder.toString());
         return stringBuilder.toString();
     }
 
-    public String buildQueryByGenreAndSort(String genre,int limit,SortParam sortParam)
-    {
+    public String buildQueryByGenreAndSort(String genre, int limit, SortParam sortParam) {
         StringBuilder stringBuilder = new StringBuilder()
                 .append(getAPIURL())
                 .append("list_movies.json")
-                .append("?genre="+genre)
-                .append("&limit="+limit)
-                .append("&sort_by="+getString(sortParam.param));
-        Log.d(TAG,"Query = " + stringBuilder.toString());
+                .append("?genre=" + genre)
+                .append("&limit=" + limit)
+                .append("&sort_by=" + getString(sortParam.param));
+        Log.d(TAG, "Query = " + stringBuilder.toString());
         return stringBuilder.toString();
+    }
+
+    public String buildQueryByMovieID(String id) {
+        return null;
     }
 }

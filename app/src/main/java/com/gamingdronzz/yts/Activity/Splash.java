@@ -9,7 +9,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.gamingdronzz.yts.Classes.DummyURLProcessor;
-import com.gamingdronzz.yts.Classes.URLProcessor;
 import com.gamingdronzz.yts.Interfaces.IURLProcessor;
 import com.gamingdronzz.yts.Listeners.OnURLAvailabilityCheckedListener;
 import com.gamingdronzz.yts.R;

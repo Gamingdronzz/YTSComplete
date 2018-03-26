@@ -9,7 +9,7 @@
     android:minHeight="220dp"
     app:cardElevation="@dimen/elevation_medium"
     app:cardCornerRadius="@dimen/corner_radius_min"
-    tools:context="com.gamingdronzz.yts.Activity.MainActivity">
+    tools:context="com.gamingdronzz.yts.Activity.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

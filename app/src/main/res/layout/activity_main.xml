@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.gamingdronzz.yts.CustomItems.CardDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.gamingdronzz.yts.Activity.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_alignParentTop="true"
-        app:tabMode="fixed"
-        app:tabGravity="center"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Large"
-        app:tabTextColor="@color/colorWhite"
-        app:tabSelectedTextColor="@color/colorWhite"
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:tabIndicatorColor="@color/colorAccent" />
+        android:layout_height="match_parent" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPagerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view_main"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
-</LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="false">
+        <include layout="@layout/nav_header_right"/>
+    </android.support.design.widget.NavigationView>
+
+
+
+</com.gamingdronzz.yts.CustomItems.CardDrawerLayout>
