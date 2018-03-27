@@ -38,20 +38,22 @@ public class VolleyHelper {
     ErrorListener errorListener = new VolleyErrorListener();
     //Listener jsonArrayResponseListener = new JsonArrayResponseListener();
     //Listener jsonObjectResponseListener = new JsonObjectResponseListener();
-    Listener stringResponseListener = new StringResponseListener();
+    Listener stringResponseListener;
 
     public interface VolleyResponse {
         void onError(VolleyError volleyError);
 
-        void onResponse(String str);
+        void onResponse(String str,String tag);
     }
 
     class StringResponseListener implements Listener<String> {
-        StringResponseListener() {
+        String tag;
+        StringResponseListener(String tag) {
+            this.tag = tag;
         }
 
         public void onResponse(String response) {
-            VolleyHelper.this.delegate.onResponse(response);
+            VolleyHelper.this.delegate.onResponse(response,tag);
         }
     }
 
@@ -116,7 +118,7 @@ public class VolleyHelper {
     }
 
     public void makeStringRequest(String url, String TAG) {
-        StringRequest strReq = new StringRequest(StringRequest.Method.POST, url, this.stringResponseListener, this.errorListener);
+        StringRequest strReq = new StringRequest(StringRequest.Method.POST, url, stringResponseListener = new StringResponseListener(TAG), this.errorListener);
         setShouldCache(strReq, true);
         AppController.getInstance().addToRequestQueue(strReq, TAG);
     }

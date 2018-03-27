@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gamingdronzz.yts.Activity.MovieDetail">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/small_cover" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/background"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/movie_title_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_25"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/movie_release_year_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_title_detail"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/movie_genre_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_release_year_detail"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/movie_imdbrating_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_genre_detail"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorWhite" />
+
+
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:id="@+id/image_cover_medium_detail"/>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/movie_runtime_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

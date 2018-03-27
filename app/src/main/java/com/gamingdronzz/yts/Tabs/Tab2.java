@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.gamingdronzz.yts.Adapter.RecyclerViewAdapterMovieCard;
-import com.gamingdronzz.yts.Models.MovieCardModel;
+import com.gamingdronzz.yts.Models.MovieData;
 import com.gamingdronzz.yts.R;
 import com.gamingdronzz.yts.Tools.Helper;
 import com.gamingdronzz.yts.Tools.VolleyHelper;
@@ -31,7 +31,7 @@ import java.util.List;
 public class Tab2 extends Fragment implements VolleyHelper.VolleyResponse {
     VolleyHelper volleyHelper;
     RecyclerView recyclerView;
-    private List<MovieCardModel> modelList;
+    private List<MovieData> modelList;
     RecyclerViewAdapterMovieCard adapter;
     final String TAG = "Tab1";
 
@@ -53,7 +53,7 @@ public class Tab2 extends Fragment implements VolleyHelper.VolleyResponse {
 
     private void bindviews(View view) {
         recyclerView = view.findViewById(R.id.recycler_view_tab1);
-        modelList = new ArrayList<MovieCardModel>();
+        modelList = new ArrayList<MovieData>();
         adapter = new RecyclerViewAdapterMovieCard(modelList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -107,27 +107,19 @@ public class Tab2 extends Fragment implements VolleyHelper.VolleyResponse {
     }
 
     @Override
-    public void onResponse(String str) {
+    public void onResponse(String str,String tag) {
         Log.d(TAG, "Response = " + str.toString());
         if (str != null) {
-
             try {
                 JSONObject jsonObject = new JSONObject(str);
-                Log.d(TAG, "Status = " + jsonObject.getString(Helper.getInstance().STATUS));
-                JSONObject data = new JSONObject(jsonObject.getString(Helper.getInstance().DATA));
+                Log.d(TAG, "Status = " + jsonObject.getString(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.STATUS)));
+                JSONObject data = new JSONObject(jsonObject.getString(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.DATA)));
                 Log.d(TAG, "Data = " + data.toString());
-                JSONArray movies = data.getJSONArray(Helper.getInstance().MOVIES);
+                JSONArray movies = data.getJSONArray(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.MOVIES));
                 Log.d(TAG, "Movies = " + movies.toString());
                 for (int i = 0; i < movies.length(); i++) {
-                    JSONObject movie = new JSONObject(movies.get(i).toString());
-                    Log.d(TAG, "Movie " + (i + 1) + " = " + movie.getString("title"));
-                    Log.d(TAG, "Image " + (i + 1) + " = " + movie.getString("small_cover_image"));
-                    Log.d(TAG, "Year " + (i + 1) + " = " + movie.getString("year"));
-                    MovieCardModel movieCardModel = new MovieCardModel();
-                    movieCardModel.setMovieName(movie.getString("title"));
-                    movieCardModel.setImageURL(movie.getString("medium_cover_image"));
-                    movieCardModel.setYear(movie.getString("year"));
-                    modelList.add(i,movieCardModel);
+                    MovieData movieData = Helper.getInstance().createMovieData(movies, i);
+                    modelList.add(i, movieData);
                     adapter.notifyItemInserted(i);
                 }
             } catch (JSONException jse) {

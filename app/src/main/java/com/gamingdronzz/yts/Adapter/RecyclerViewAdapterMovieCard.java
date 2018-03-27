@@ -6,21 +6,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gamingdronzz.yts.Models.MovieCardModel;
+import com.gamingdronzz.yts.Models.MovieData;
 import com.gamingdronzz.yts.R;
-import com.gamingdronzz.yts.Tools.VolleyHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
 public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerViewAdapterMovieCard.MyViewHolder> {
-    private List<MovieCardModel> movieCardlist;
+    private List<MovieData> movieCardlist;
     final String TAG = "PreviousBusiness";
     Context context;
 
@@ -28,7 +25,7 @@ public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerV
 
     }
 
-    public RecyclerViewAdapterMovieCard(List<MovieCardModel> previousBusinesses) {
+    public RecyclerViewAdapterMovieCard(List<MovieData> previousBusinesses) {
         this.movieCardlist = previousBusinesses;
 
     }
@@ -44,11 +41,19 @@ public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        MovieCardModel model = movieCardlist.get(position);
-        Picasso.get()
-                .load(model.getImageURL())
-                .into(holder.imageCover);
-        holder.movieTitle.setText(model.getMovieName());
+
+        MovieData model = movieCardlist.get(position);
+        if(model==null)
+        {
+            Log.d(TAG,"Null Model");
+            return;
+        }
+        if(model.getMedium_cover_image()!=null) {
+            Picasso.get()
+                    .load(model.getMedium_cover_image())
+                    .into(holder.imageCover);
+        }
+        holder.movieTitle.setText(model.getTitle());
         holder.movieReleaseYear.setText(model.getYear());
     }
 
@@ -68,8 +73,8 @@ public class RecyclerViewAdapterMovieCard extends RecyclerView.Adapter<RecyclerV
 
         private MyViewHolder(View itemView) {
             super(itemView);
-            imageCover = (ImageView) itemView.findViewById(R.id.image_cover_small);
-            movieTitle = (TextView) itemView.findViewById(R.id.movie_name);
+            imageCover = itemView.findViewById(R.id.image_cover_small);
+            movieTitle = itemView.findViewById(R.id.movie_name);
             movieReleaseYear = itemView.findViewById(R.id.movie_year);
         }
 

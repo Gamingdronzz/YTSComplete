@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gamingdronzz.yts.Classes.DummyURLProcessor;
 import com.gamingdronzz.yts.Interfaces.IURLProcessor;
@@ -16,19 +17,23 @@ import com.gamingdronzz.yts.R;
 
 public class Splash extends AppCompatActivity {
     ImageView imageView;
+    TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         imageView = findViewById(R.id.logo);
+        info = findViewById(R.id.textview_Info);
 
         StartAnimations();
 
+
     }
 
+
     private void StartAnimations() {
-        final Animation animationScale = AnimationUtils.loadAnimation(this, R.anim.scale);
+        final Animation animationScale = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
 
 
@@ -53,6 +58,7 @@ public class Splash extends AppCompatActivity {
                     @Override
                     public void OnUrlAvailable() {
                         Log.d("Splash","URl Exists");
+                        info.setText("Available");
                         LoadNextActivity();
                     }
 

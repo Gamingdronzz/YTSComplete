@@ -78,8 +78,8 @@ public class FragmentHome extends Fragment implements TabLayout.OnTabSelectedLis
         //tabLayout.getTabAt(0).setIcon(R.drawable.group);
 
         //Add Title here
-        tabLayout.getTabAt(0).setText("LATEST");
-        tabLayout.getTabAt(1).setText("POPULAR");
+        tabLayout.getTabAt(0).setText("LATEST UPLOADS");
+        tabLayout.getTabAt(1).setText("POPULAR DOWNLOADS");
         //tabLayout.getTabAt(2).setText("RECENTLY\nVISITED");
 
 

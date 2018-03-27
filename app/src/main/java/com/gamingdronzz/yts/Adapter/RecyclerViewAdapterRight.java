@@ -42,10 +42,10 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         MovieCardModel model = movieCardlist.get(position);
         Picasso.get()
-                .load(model.getImageURL())
+                .load(model.getMovieCoverURL())
                 .into(holder.imageCover);
-        holder.movieTitle.setText(model.getMovieName());
-        holder.movieReleaseYear.setText(model.getYear());
+        holder.movieTitle.setText(model.getMovieTitle());
+        holder.movieReleaseYear.setText(model.getMovieReleaseYear());
     }
 
 
@@ -59,7 +59,6 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
         private ImageView imageCover;
         private TextView movieTitle;
         private TextView movieReleaseYear;
-
 
 
         private MyViewHolder(View itemView) {

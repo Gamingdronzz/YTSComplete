@@ -15,7 +15,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     int tabCount;
     Tab1 tab1;
     Tab2 tab2;
-    Tab3 tab3;
 
 
 

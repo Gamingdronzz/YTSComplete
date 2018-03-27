@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/title_right"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_medium"
+            android:drawableTint="@color/colorWhite"
+            android:background="@color/colorPrimary"
+            android:text="ABCEEFG"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:textColor="@color/colorWhite" />
 
-    <TextView
-        android:id="@+id/title_right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="6dp"
-        android:padding="@dimen/padding_medium"
-        android:text="ABCEEFG"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorWhite"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/colorBlack"></View>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_right"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler_view_right">
+        android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

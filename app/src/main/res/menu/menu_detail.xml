@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gamingdronzz.yts.Activity.HomeActivity">
+
+
+    <item
+        android:id="@+id/action_favorites"
+        android:orderInCategory="100"
+        android:title="Favorites"
+        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:iconTint="@color/colorWhite"
+        app:showAsAction="always" />
+
+
+</menu>

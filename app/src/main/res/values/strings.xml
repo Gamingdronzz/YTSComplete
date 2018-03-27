@@ -18,4 +18,47 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_right_drawer">Right Drawer</string>
+
+
+    <!-- Torrent String Keys-->
+    <string name="status">status</string>
+    <string name="status_message">status_message</string>
+    <string name="data">data</string>
+    <string name="movie_count">movie_count</string>
+    <string name="limit">limit</string>
+    <string name="page_number">page_number</string>
+    <string name="movies">movies</string>
+    <string name="movie_id">id</string>
+    <string name="movie_url">url</string>
+    <string name="imdb_code">imdb_code</string>
+    <string name="movie_title">title</string>
+    <string name="movie_title_english">title_english</string>
+    <string name="movie_title_long">title_long</string>
+    <string name="slug">slug</string>
+    <string name="movie_year">year</string>
+    <string name="runtime">runtime</string>
+    <string name="genres">genres</string>
+    <string name="summary">summary</string>
+    <string name="description_full">description_full</string>
+    <string name="synopsis">synopsis</string>
+    <string name="yt_trailer_code">yt_trailer_code</string>
+    <string name="language">language</string>
+    <string name="mpa_rating">mpa_rating</string>
+    <string name="background_image">background_image</string>
+    <string name="background_image_original">background_image_original</string>
+    <string name="small_cover_image">small_cover_image</string>
+    <string name="medium_cover_image">medium_cover_image</string>
+    <string name="large_cover_image">large_cover_image</string>
+    <string name="movie_state">state</string>
+    <string name="torrents">torrents</string>
+    <string name="torrent_url">url</string>
+    <string name="torrent_hash">hash</string>
+    <string name="torrent_quality">quality</string>
+    <string name="torrent_seeds">seeds</string>
+    <string name="torrent_peers">peers</string>
+    <string name="torrent_size">size</string>
+    <string name="torrent_size_bytes">size_bytes</string>
+    <string name="torrent_date_uploaded">date_uploaded</string>
+    <string name="torrent_date_uploaded_unix">date_uploaded_unix</string>
+    <string name="movie">movie</string>
 </resources>

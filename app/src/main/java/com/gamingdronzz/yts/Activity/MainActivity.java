@@ -22,25 +22,21 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.gamingdronzz.yts.Adapter.RecyclerViewAdapterMovieCard;
 import com.gamingdronzz.yts.Adapter.RecyclerViewAdapterRight;
 import com.gamingdronzz.yts.CustomItems.CardDrawerLayout;
 import com.gamingdronzz.yts.Fragments.FragmentHome;
 import com.gamingdronzz.yts.Models.MovieCardModel;
 import com.gamingdronzz.yts.R;
 import com.gamingdronzz.yts.Tools.Helper;
+import com.gamingdronzz.yts.Tools.PreferencesManager;
 import com.gamingdronzz.yts.Tools.VolleyHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, VolleyHelper.VolleyResponse {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView rightTitle;
     boolean isList = false;
@@ -48,9 +44,11 @@ public class MainActivity extends AppCompatActivity
     CardDrawerLayout drawer;
     VolleyHelper volleyHelper;
     final String TAG = "Main";
-    private List<MovieCardModel> modelList;
+    private List<MovieCardModel> modelListRecent;
+    private List<MovieCardModel> modelListFavorites;
     RecyclerViewAdapterRight adapter;
     RecyclerView recyclerView;
+    PreferencesManager preferencesManager;
 
 
     @Override
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        preferencesManager = new PreferencesManager(this);
         rightTitle = findViewById(R.id.title_right);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +88,9 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
         recyclerView = findViewById(R.id.recycler_view_right);
-        modelList = new ArrayList<MovieCardModel>();
-        adapter = new RecyclerViewAdapterRight(modelList);
+        modelListRecent = new ArrayList<>();
+        modelListFavorites = new ArrayList<>();
+        adapter = new RecyclerViewAdapterRight(modelListRecent);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     rightTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.ic_favorite_border_black_24dp), null, null, null);
+                    rightTitle.setCompoundDrawablePadding(10);
                 }
                 return true;
             case R.id.action_recently_viewed:
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
                 rightTitle.setText("Recents");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     rightTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.ic_access_recent_24dp), null, null, null);
+                    rightTitle.setCompoundDrawablePadding(10);
                 }
             default:
                 return super.onOptionsItemSelected(item);
@@ -157,17 +159,72 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showFavorites() {
+        if(modelListFavorites!=null) {
+            modelListFavorites.clear();
+        }
+        adapter.notifyDataSetChanged();
         drawer.openDrawer(Gravity.END);
-        volleyHelper = new VolleyHelper(this, this);
-        volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByGenre("all", 30), "Upcoming");
+        Object[][] MovieCardArray = preferencesManager.getFavorites();
+        AddToList(MovieCardArray,modelListFavorites);
+
+    }
+
+    private void AddToList(Object[][] MovieCardArray, List<MovieCardModel> modelList)
+    {
+        if(modelList==null)
+        {
+            modelList = new ArrayList<>();
+        }
+        modelList.clear();
+
+        Object[] MovieIds,MovieTitles,MovieYears,MovieCoverURL,MovieTime;
+
+        MovieIds = MovieCardArray[0];
+        MovieTitles = MovieCardArray[1];
+        MovieYears = MovieCardArray[2];
+        MovieTime = MovieCardArray[3];
+        MovieCoverURL = MovieCardArray[4];
+
+        if(MovieIds!=null) {
+            int length = MovieIds.length;
+            for (int i = 0; i < length; i++) {
+                Log.d(TAG,"Recent ID = " + MovieIds[i].toString());
+                Log.d(TAG,"Recent Title = " + MovieTitles[i].toString());
+                Log.d(TAG,"Recent Year = " + MovieYears[i].toString());
+                Log.d(TAG,"Recent Time = " + MovieTime[i].toString());
+                Log.d(TAG,"Recent Cover = " + MovieCoverURL[i].toString());
+//                MovieCardModel movieCardModel = new MovieCardModel();
+//                movieCardModel.setMovieID(MovieIds[i].toString());
+//                movieCardModel.setMovieTitle(MovieTitles[i].toString());
+//                movieCardModel.setMovieReleaseYear(MovieYears[i].toString());
+//                movieCardModel.setMovieTime(MovieTime[i].toString());
+//                movieCardModel.setMovieCoverURL(MovieCoverURL[i].toString());
+//                modelList.add(movieCardModel);
+
+            }
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     private void showRecentlyViewed() {
-        modelList.clear();
+        modelListRecent.clear();
         adapter.notifyDataSetChanged();
         drawer.openDrawer(Gravity.END);
-        volleyHelper = new VolleyHelper(this, this);
-        volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByMovieID("7412"), "Upcoming");
+        //volleyHelper = new VolleyHelper(this, this);
+//        Object[] MovieIds = preferencesManager.getRecents();
+//        if(MovieIds!=null) {
+//            int length = MovieIds.length;
+//
+//            for (int i = 0; i < length; i++) {
+//                String movieid = MovieIds[i].toString();
+//                Log.d(TAG,"ID = " + movieid);
+//                volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByMovieID(movieid), "Recent-" + movieid);
+//            }
+//        }
+
+        Object[][] MovieCardArray = preferencesManager.getRecents();
+        AddToList(MovieCardArray,modelListRecent);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -199,38 +256,36 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onError(VolleyError volleyError) {
-
-    }
-
-    @Override
-    public void onResponse(String str) {
-        Log.d(TAG, "Response = " + str.toString());
-        if (str != null) {
-
-            try {
-                JSONObject jsonObject = new JSONObject(str);
-                Log.d(TAG, "Status = " + jsonObject.getString(Helper.getInstance().STATUS));
-                JSONObject data = new JSONObject(jsonObject.getString(Helper.getInstance().DATA));
-                Log.d(TAG, "Data = " + data.toString());
-                JSONArray movies = data.getJSONArray(Helper.getInstance().MOVIES);
-                Log.d(TAG, "Movies = " + movies.toString());
-                for (int i = 0; i < movies.length(); i++) {
-                    JSONObject movie = new JSONObject(movies.get(i).toString());
-                    Log.d(TAG, "Movie " + (i + 1) + " = " + movie.getString("title"));
-                    Log.d(TAG, "Image " + (i + 1) + " = " + movie.getString("small_cover_image"));
-                    Log.d(TAG, "Year " + (i + 1) + " = " + movie.getString("year"));
-                    MovieCardModel movieCardModel = new MovieCardModel();
-                    movieCardModel.setMovieName(movie.getString("title"));
-                    movieCardModel.setImageURL(movie.getString("medium_cover_image"));
-                    movieCardModel.setYear(movie.getString("year"));
-                    modelList.add(i, movieCardModel);
-                    adapter.notifyItemInserted(i);
-                }
-            } catch (JSONException jse) {
-                jse.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    public void onError(VolleyError volleyError) {
+//
+//    }
+//
+//    @Override
+//    public void onResponse(String str, String tag) {
+//
+//        Log.d(TAG, "Response = " + str.toString());
+//        if (str != null) {
+//
+//            try {
+//                JSONObject jsonObject = new JSONObject(str);
+//                //Log.d(TAG, "Status = " + jsonObject.getString(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.STATUS)));
+//                JSONObject data = new JSONObject(jsonObject.getString(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.DATA)));
+//                JSONObject movie = data.getJSONObject(Helper.getInstance().getTorrentAPIKey(Helper.API_KEY.MOVIE));
+//                MovieData movieData = Helper.getInstance().createMovieData(movie);
+//                Log.d(TAG,"Adding movie - " + movieData.getTitle());
+//                if(tag.contains("Fav-"))
+//                {
+//                    modelListFavorites.add(0,movieData);
+//                }
+//                else if (tag.contains("Recent-"))
+//                {
+//                    modelListRecent.add(0,movieData);
+//                }
+//                adapter.notifyItemInserted(0);
+//            } catch (JSONException jse) {
+//                jse.printStackTrace();
+//            }
+//        }
+//    }
 }
