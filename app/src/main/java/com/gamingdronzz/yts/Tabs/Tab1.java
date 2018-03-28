@@ -3,6 +3,7 @@ package com.gamingdronzz.yts.Tabs;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.gamingdronzz.yts.Activity.MovieDetail;
 import com.gamingdronzz.yts.Adapter.RecyclerViewAdapterMovieCard;
+import com.gamingdronzz.yts.Classes.AddRecentProcessor;
 import com.gamingdronzz.yts.Listeners.ClickListener;
 import com.gamingdronzz.yts.Listeners.RecyclerViewTouchListeners;
 import com.gamingdronzz.yts.Models.MovieCardModel;
@@ -41,6 +43,7 @@ public class Tab1 extends Fragment implements VolleyHelper.VolleyResponse {
     RecyclerViewAdapterMovieCard adapter;
     final String TAG = "Tab1";
     PreferencesManager preferencesManager;
+    AddRecentProcessor addRecentProcessor;
 
 
     //Overriden method onCreateView
@@ -57,6 +60,7 @@ public class Tab1 extends Fragment implements VolleyHelper.VolleyResponse {
     private void init(View view) {
         volleyHelper = new VolleyHelper(this, view.getContext());
         volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByGenre("all", 30), "Upcoming");
+        addRecentProcessor = new AddRecentProcessor();
         setupProgress();
     }
 
@@ -73,7 +77,13 @@ public class Tab1 extends Fragment implements VolleyHelper.VolleyResponse {
             public void onClick(View view, int position) {
                 MovieData movieData = modelList.get(position);
                 Helper.getInstance().setSelectedMovieData(movieData);
-                preferencesManager.addRecent(movieData.getId(),movieData.getTitle(),movieData.getYear(),movieData.getSmall_cover_image());
+                MovieCardModel movieCardModel = new MovieCardModel();
+                movieCardModel.setMovieTitle(movieData.getTitle());
+                movieCardModel.setMovieID(movieData.getId());
+                movieCardModel.setMovieCoverURL(movieData.getSmall_cover_image());
+                movieCardModel.setMovieReleaseYear(movieData.getYear());
+                addRecentProcessor.addRecent(movieCardModel,view.getContext());
+                //preferencesManager.addRecent(movieData.getId(),movieData.getTitle(),movieData.getYear(),movieData.getSmall_cover_image(),"Some time-"+movieData.getId());
                 Intent intent = new Intent();
                 intent.setClass(view.getContext(),MovieDetail.class);
                 view.getContext().startActivity(intent);

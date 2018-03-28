@@ -1,6 +1,7 @@
 package com.gamingdronzz.yts.Adapter;
 
 import android.content.Context;
+import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,11 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
 
     }
 
+    public void ChangeList(List<MovieCardModel> movieCardlist)
+    {
+        this.movieCardlist = movieCardlist;
+    }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,6 +51,7 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
                 .load(model.getMovieCoverURL())
                 .into(holder.imageCover);
         holder.movieTitle.setText(model.getMovieTitle());
+        holder.movieTime.setText(model.getMovieTime());
         holder.movieReleaseYear.setText(model.getMovieReleaseYear());
     }
 
@@ -59,6 +66,7 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
         private ImageView imageCover;
         private TextView movieTitle;
         private TextView movieReleaseYear;
+        private TextView movieTime;
 
 
         private MyViewHolder(View itemView) {
@@ -66,6 +74,7 @@ public class RecyclerViewAdapterRight extends RecyclerView.Adapter<RecyclerViewA
             imageCover = (ImageView) itemView.findViewById(R.id.image_cover_small_right);
             movieTitle = (TextView) itemView.findViewById(R.id.movie_name_right);
             movieReleaseYear = itemView.findViewById(R.id.movie_year_right);
+            movieTime = itemView.findViewById(R.id.movie_time);
         }
 
     }

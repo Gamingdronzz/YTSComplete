@@ -1,5 +1,7 @@
 package com.gamingdronzz.yts.Activity;
 
+import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +27,9 @@ import android.widget.TextView;
 import com.gamingdronzz.yts.Adapter.RecyclerViewAdapterRight;
 import com.gamingdronzz.yts.CustomItems.CardDrawerLayout;
 import com.gamingdronzz.yts.Fragments.FragmentHome;
+import com.gamingdronzz.yts.Interfaces.IGetRecentProcessor;
+import com.gamingdronzz.yts.Listeners.ClickListener;
+import com.gamingdronzz.yts.Listeners.RecyclerViewTouchListeners;
 import com.gamingdronzz.yts.Models.MovieCardModel;
 import com.gamingdronzz.yts.R;
 import com.gamingdronzz.yts.Tools.Helper;
@@ -36,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IGetRecentProcessor {
 
     TextView rightTitle;
     boolean isList = false;
@@ -44,8 +49,8 @@ public class MainActivity extends AppCompatActivity
     CardDrawerLayout drawer;
     VolleyHelper volleyHelper;
     final String TAG = "Main";
-    private List<MovieCardModel> modelListRecent;
     private List<MovieCardModel> modelListFavorites;
+    private List<MovieCardModel> modelListCards;
     RecyclerViewAdapterRight adapter;
     RecyclerView recyclerView;
     PreferencesManager preferencesManager;
@@ -88,12 +93,27 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
         recyclerView = findViewById(R.id.recycler_view_right);
-        modelListRecent = new ArrayList<>();
-        modelListFavorites = new ArrayList<>();
-        adapter = new RecyclerViewAdapterRight(modelListRecent);
+        modelListCards = new ArrayList<>();
+
+        adapter = new RecyclerViewAdapterRight(modelListCards);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListeners(this,recyclerView , new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Helper.getInstance().setSelectedMovieID(modelListCards.get(position).getMovieID());
+                Intent intent = new Intent();
+                intent.setClass(view.getContext(),MovieDetail.class);
+                view.getContext().startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }) {
+        });
     }
 
     @Override
@@ -159,72 +179,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showFavorites() {
-        if(modelListFavorites!=null) {
-            modelListFavorites.clear();
-        }
+
+        modelListCards.clear();
         adapter.notifyDataSetChanged();
         drawer.openDrawer(Gravity.END);
-        Object[][] MovieCardArray = preferencesManager.getFavorites();
-        AddToList(MovieCardArray,modelListFavorites);
+        modelListCards = preferencesManager.getFavorites();
+        adapter.ChangeList(modelListCards);
+        adapter.notifyDataSetChanged();
 
     }
 
-    private void AddToList(Object[][] MovieCardArray, List<MovieCardModel> modelList)
-    {
-        if(modelList==null)
-        {
-            modelList = new ArrayList<>();
-        }
-        modelList.clear();
-
-        Object[] MovieIds,MovieTitles,MovieYears,MovieCoverURL,MovieTime;
-
-        MovieIds = MovieCardArray[0];
-        MovieTitles = MovieCardArray[1];
-        MovieYears = MovieCardArray[2];
-        MovieTime = MovieCardArray[3];
-        MovieCoverURL = MovieCardArray[4];
-
-        if(MovieIds!=null) {
-            int length = MovieIds.length;
-            for (int i = 0; i < length; i++) {
-                Log.d(TAG,"Recent ID = " + MovieIds[i].toString());
-                Log.d(TAG,"Recent Title = " + MovieTitles[i].toString());
-                Log.d(TAG,"Recent Year = " + MovieYears[i].toString());
-                Log.d(TAG,"Recent Time = " + MovieTime[i].toString());
-                Log.d(TAG,"Recent Cover = " + MovieCoverURL[i].toString());
-//                MovieCardModel movieCardModel = new MovieCardModel();
-//                movieCardModel.setMovieID(MovieIds[i].toString());
-//                movieCardModel.setMovieTitle(MovieTitles[i].toString());
-//                movieCardModel.setMovieReleaseYear(MovieYears[i].toString());
-//                movieCardModel.setMovieTime(MovieTime[i].toString());
-//                movieCardModel.setMovieCoverURL(MovieCoverURL[i].toString());
-//                modelList.add(movieCardModel);
-
-            }
-            adapter.notifyDataSetChanged();
-        }
-
-    }
 
     private void showRecentlyViewed() {
-        modelListRecent.clear();
+        modelListCards.clear();
         adapter.notifyDataSetChanged();
         drawer.openDrawer(Gravity.END);
-        //volleyHelper = new VolleyHelper(this, this);
-//        Object[] MovieIds = preferencesManager.getRecents();
-//        if(MovieIds!=null) {
-//            int length = MovieIds.length;
-//
-//            for (int i = 0; i < length; i++) {
-//                String movieid = MovieIds[i].toString();
-//                Log.d(TAG,"ID = " + movieid);
-//                volleyHelper.makeStringRequest(Helper.getInstance().buildQueryByMovieID(movieid), "Recent-" + movieid);
-//            }
-//        }
-
-        Object[][] MovieCardArray = preferencesManager.getRecents();
-        AddToList(MovieCardArray,modelListRecent);
+        modelListCards = preferencesManager.getRecents();
+        adapter.ChangeList(modelListCards);
+        adapter.notifyDataSetChanged();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -254,6 +226,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public Object[][] getRecents() {
+        return new Object[0][];
+    }
+
+    @Override
+    public Object[] getRecent() {
+        return new Object[0];
     }
 
 //    @Override

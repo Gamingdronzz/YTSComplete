@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_medium"
-    android:maxHeight="40dp"
+
     android:orientation="vertical"
 
     app:cardCornerRadius="@dimen/corner_radius_min"
@@ -20,37 +20,53 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
+
             android:adjustViewBounds="true"
             android:src="@drawable/small_cover" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
+            android:minHeight="100dp"
             android:paddingLeft="@dimen/padding_small"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:id="@+id/movie_name_right"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/padding_small"
                 android:textColor="@color/colorBlack"
+                android:layout_alignParentTop="true"
                 android:textSize="@dimen/text_15"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/movie_year_right"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_name_right"
                 android:paddingLeft="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_small"
                 android:textSize="@dimen/text_15"
                 android:textStyle="italic" />
+            <TextView
+                android:id="@+id/movie_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_small"
+                android:textSize="@dimen/text_15"
+                android:textStyle="italic"
+                android:paddingEnd="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>

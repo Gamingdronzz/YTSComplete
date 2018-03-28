@@ -11,7 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by balpreet on 3/22/2018.
@@ -20,7 +24,7 @@ import java.util.ArrayList;
 public class Helper {
 
     private static Helper _instance;
-    private MovieData selectedMovieData;
+    private MovieData selectedMovieData = null;
     private String selectedMovieID;
     final String TAG = "Helper";
 
@@ -165,6 +169,8 @@ public class Helper {
 
     public void setSelectedMovieData(MovieData movieData) {
         this.selectedMovieData = movieData;
+        if(movieData!=null)
+        setSelectedMovieID(movieData.getId());
     }
 
     public MovieData getSelectedMovieData() {
@@ -505,5 +511,12 @@ public class Helper {
             jse.printStackTrace();
         }
         return null;
+    }
+
+    public String getTime()
+    {
+        DateFormat df = new SimpleDateFormat("h:mm a");
+        String date = df.format(Calendar.getInstance().getTime());
+        return date;
     }
 }
