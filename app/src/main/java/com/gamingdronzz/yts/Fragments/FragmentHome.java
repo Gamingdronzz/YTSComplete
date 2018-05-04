@@ -7,27 +7,22 @@ package com.gamingdronzz.yts.Fragments;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
-
 
 import com.gamingdronzz.yts.R;
 import com.gamingdronzz.yts.Tabs.ViewPagerAdapter;
-
-import java.util.HashMap;
 public class FragmentHome extends Fragment implements TabLayout.OnTabSelectedListener {
 
     private TextView welcomeText, ccaDeskText;
     View view;
     final String TAG = "Home";
     private TabLayout tabLayout;
-    //This is our viewPager
+
     private ViewPager viewPager;
     ViewPagerAdapter adapter;
     public FragmentHome() {

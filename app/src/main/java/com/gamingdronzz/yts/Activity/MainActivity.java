@@ -1,26 +1,25 @@
 package com.gamingdronzz.yts.Activity;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -36,7 +35,6 @@ import com.gamingdronzz.yts.Tools.Helper;
 import com.gamingdronzz.yts.Tools.PreferencesManager;
 import com.gamingdronzz.yts.Tools.VolleyHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,6 +209,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new FragmentHome();
             getSupportFragmentManager().beginTransaction().replace(R.id.contentPanel, fragment).commit();
         }
+
         if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
